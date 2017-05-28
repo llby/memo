@@ -1,12 +1,14 @@
 package memo
 
 import (
-	//"io/ioutil"
 	"bufio"
 	"os"
+	"strings"
 
 	"github.com/nsf/termbox-go"
 )
+
+var rows []string
 
 func print_tb(x, y int, fg, bg termbox.Attribute, msg string) {
 	for _, c := range msg {
@@ -15,7 +17,7 @@ func print_tb(x, y int, fg, bg termbox.Attribute, msg string) {
 	}
 }
 
-func open_file() []string {
+func OpenFile() {
 	var fp *os.File
 	var err error
 	var res []string
@@ -37,18 +39,15 @@ func open_file() []string {
 	if err := scanner.Err(); err != nil {
 		panic(err)
 	}
-	return res
+	rows = res
 }
 
-func PrintFile() {
-
-	rows := open_file()
+func FilterFile(f string) {
 	y := 1
 	for _, v := range rows {
-		print_tb(0, y, termbox.ColorWhite, termbox.ColorBlack, v)
-		y++
+		if (strings.HasPrefix(v, f)) {
+			print_tb(0, y, termbox.ColorWhite, termbox.ColorBlack, v)
+			y++
+		}
 	}
-
-
 }
-

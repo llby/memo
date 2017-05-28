@@ -21,11 +21,7 @@ loop:
 				}
 			}
 
-			//draw_keyboard()
-			//dispatch_press(&ev)
-			//pretty_print_press(&ev)
 			ReDraw_all()
-
 
 		case termbox.EventError:
 			panic(ev.Err)

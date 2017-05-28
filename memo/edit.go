@@ -1,11 +1,9 @@
 package memo
 
 import (
-  //"fmt"
   "github.com/mattn/go-runewidth"
   "github.com/nsf/termbox-go"
   "unicode/utf8"
-
 )
 
 func fill(x, y, w, h int, cell termbox.Cell) {
@@ -91,8 +89,7 @@ func (eb *EditBox) Draw(x, y, w, h int) {
 		}
 
 		if rx >= w {
-			termbox.SetCell(x+w-1, y, '→',
-				coldef, coldef)
+			termbox.SetCell(x+w-1, y, '→', coldef, coldef)
 			break
 		}
 
@@ -196,6 +193,10 @@ func (eb *EditBox) CursorX() int {
 	return eb.cursor_voffset - eb.line_voffset
 }
 
+func (eb *EditBox) GetText() string {
+    return string(eb.text)
+}
+
 var edit_box EditBox
 
 func draw_all() {
@@ -211,8 +212,7 @@ func ReDraw_all() {
 	midx := 1
 
 	draw_all()
-	PrintFile()
-
+	FilterFile(edit_box.GetText())
 
 	edit_box.Draw(midx, midy, edit_box_width, 1)
 	termbox.SetCursor(midx+edit_box.CursorX(), midy)
