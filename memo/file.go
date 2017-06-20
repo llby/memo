@@ -2,6 +2,7 @@ package memo
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strings"
 
@@ -9,6 +10,7 @@ import (
 )
 
 var rows []string
+var lineno int
 
 func print_tb(x, y int, fg, bg termbox.Attribute, msg string) {
 	for _, c := range msg {
@@ -40,14 +42,25 @@ func OpenFile() {
 		panic(err)
 	}
 	rows = res
+	lineno = 1
 }
 
 func FilterFile(f string) {
 	y := 1
 	for _, v := range rows {
 		if (strings.HasPrefix(v, f)) {
-			print_tb(0, y, termbox.ColorWhite, termbox.ColorBlack, v)
+			fg := termbox.ColorWhite
+			bg := termbox.ColorBlack
+			if lineno == y {
+				fg = termbox.ColorDefault | termbox.AttrUnderline
+				bg = termbox.ColorMagenta
+			}
+			print_tb(0, y, fg, bg, v)
 			y++
 		}
 	}
+
+	var r string
+	r = fmt.Sprintf("%s", lineno)
+	print_tb(0, y, termbox.ColorWhite, termbox.ColorBlack, r)
 }

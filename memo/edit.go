@@ -211,11 +211,13 @@ func ReDraw_all() {
 	midy := 0
 	midx := 1
 
-	draw_all()
-	FilterFile(edit_box.GetText())
-
+	//入力テキストボックス
 	edit_box.Draw(midx, midy, edit_box_width, 1)
 	termbox.SetCursor(midx+edit_box.CursorX(), midy)
+
+	//出力
+	draw_all()
+	FilterFile(edit_box.GetText())
 
 	termbox.Flush()
 }

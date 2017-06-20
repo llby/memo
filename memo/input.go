@@ -13,6 +13,14 @@ loop:
 			switch ev.Key {
 			case termbox.KeyCtrlC:
 				break loop
+			case termbox.KeyCtrlE:
+				// TODO: 編集
+			case termbox.KeyArrowUp:
+				if lineno > 1 {
+					lineno--
+				}
+			case termbox.KeyArrowDown:
+				lineno++
 			case termbox.KeyBackspace, termbox.KeyBackspace2:
 				edit_box.DeleteRuneBackward()
 			default:
@@ -28,3 +36,5 @@ loop:
 		}
 	}
 }
+
+
